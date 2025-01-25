@@ -23,16 +23,16 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 DEBUG = config('DEBUG', default=False, cast=bool)
 
 
-
-# SendGrid API Key
-SENDGRID_API_KEY = config('DB_SENDGRID_API_KEY')
-
-
-#Your DEBUG setting should correctly evaluate to False in production:
-#DEBUG = True #os.environ.get('DEBUG', 'False') == 'True'
-
-# SECRET_KEY = os.environ['DB_SECRET_KEY']
-#SECRET_KEY = os.environ.get('SECRET_KEY','DB_SECRET_KEY')
+# ALLOWED_HOSTS = ['localhost', '127.0.0.1']
+ALLOWED_HOSTS = [
+    'hnkmsm-eotc-lv-production.up.railway.app',  # Replace with your actual Railway app domain
+    'localhost',
+    '127.0.0.1', 
+]
+#CSRF_TRUSTED_ORIGINS
+CSRF_TRUSTED_ORIGINS = [
+    'https://hnkmsm-eotc-lv-production.up.railway.app',  # Replace with your actual Railway app domain
+]
 
 # ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 ALLOWED_HOSTS = [
@@ -40,10 +40,7 @@ ALLOWED_HOSTS = [
     '127.0.0.1',
     'hnkmsm-eotc-lv-production.up.railway.app',
 ]
-#CSRF_TRUSTED_ORIGINS
-CSRF_TRUSTED_ORIGINS = [
-    'https://hnkmsm-eotc-lv-production.up.railway.app',
-]
+
 #CORS_ALLOWED_ORIGINS
 CORS_ALLOWED_ORIGINS = [
     'http://localhost:8000',
@@ -139,28 +136,20 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'HNKMSMEOTCAPP.wsgi.application'
 
-# Database
-# Database configuration
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',  # Change this if using another database
-#         'NAME': config('DB_NAME', default='railway'),
-#         'USER': config('DB_USER', default='postgres'),
-#         'PASSWORD': config('PASSWORD'),
-#         'HOST': config('DB_HOST', default='autorack.proxy.rlwy.net'),
-#         'PORT': config('DB_PORT', default=56986),
-#     }
-# }
+
+#Database configuration
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'railway',
-        'USER': 'postgres',
+        'ENGINE': 'django.db.backends.postgresql',  # Change this if using another database
+        'NAME': config('DB_NAME', default='railway'),
+        'USER': config('DB_USER', default='postgres'),
         'PASSWORD': config('PASSWORD'),
-        'HOST': 'autorack.proxy.rlwy.net',
-        'PORT': 56986,
+        'HOST': config('DB_HOST', default='autorack.proxy.rlwy.net'),
+        'PORT': config('DB_PORT', default=56986),
     }
 }
+
+
 
 AUTHENTICATION_BACKENDS = (
 # Needed to login by username in Django admin, even w/o `allauth`
@@ -218,6 +207,7 @@ AUTH_USER_MODEL = 'users.CustomUser'
 # DEFAULT_FROM_EMAIL = 'your-email@gmail.com'
 
 # EMAIL
+
 # SENDGRID_API_KEY = os.environ.get('SENDGRID_API_KEY','L_DB_SENDGRID_API_KEY')
 # EMAIL_HOST = 'smtp.sendgrid.net'
 # EMAIL_PORT = 587
@@ -234,6 +224,7 @@ EMAIL_PORT = config('EMAIL_PORT', default=587, cast=int)
 EMAIL_USE_TLS = config('EMAIL_USE_TLS', default=True, cast=bool)
 EMAIL_HOST_USER = config('EMAIL_HOST_USER', default='apikey')
 EMAIL_HOST_PASSWORD = config('DB_EMAIL_HOST_PASSWORD')
+
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
@@ -251,7 +242,9 @@ TIME_ZONE = 'UTC'  # or your desired timezone
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [BASE_DIR / 'static',]
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+STATIC_ROOT = BASE_DIR / 'staticfiles'
+
 
 # STATICFILES_STORAGE = "django.contrib.staticfiles.storage.StaticFilesStorage"
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
@@ -270,6 +263,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')#BASE_DIR / 'media'
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
+
 # STRIPE_SECRET_KEY = os.environ['DB_STRIPE_SECRET_KEY']
 # STRIPE_PUBLISHABLE_KEY = os.environ['DB_STRIPE_PUBLISHABLE_KEY']
 # STRIPE_WEBHOOK_SECRET = os.environ['DB_STRIPE_WEBHOOK_SECRET']
@@ -285,6 +279,7 @@ STRIPE_SECRET_KEY = config('DB_STRIPE_SECRET_KEY')
 STRIPE_PUBLISHABLE_KEY = config('DB_STRIPE_PUBLISHABLE_KEY')
 STRIPE_ENDPOINT_SECRET = config('DB_STRIPE_ENDPOINT_SECRET')
 STRIPE_WEBHOOK_SECRET = config('DB_STRIPE_WEBHOOK_SECRET')
+
 
 #Error Logging: You could add logging handlers to capture errors in production:
 LOGGING = {
@@ -311,3 +306,4 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 if os.environ.get('ENVIRONMENT') != 'production':
     from .local_settings import *
+
