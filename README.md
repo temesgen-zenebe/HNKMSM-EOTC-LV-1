@@ -1,5 +1,5 @@
-# HNKMSM-EOTC-LV
-https://uat.jobdogg.com/
+# HNKMSM-EOTC-LV https://hnkmsm-eotc-lv-production.up.railway.app
+
 web app objectives
 መጠበቅ | Preservation: ->የኢትዮጵያ ኦርቶዶክስ ተዋሕዶ ክርስትናን የተቀደሰ አስተምህሮ በትምህርት ግብአት እና መስተጋብራዊ መድረኮችን ማስጠበቅ። ->Uphold Ethiopian Orthodox Tewahedo Christianity's sacred teachings through educational resources and interactive platforms.
 
